@@ -34,7 +34,7 @@ Inspired by [Plantuml-Server](https://github.com/plantuml/plantuml-server) but s
     - [Spring-boot](https://github.com/spring-projects/spring-boot)
     - [Spring Security](https://github.com/spring-projects/spring-security)
 - **Plantuml**
-    - [Plantuml-Coe](https://github.com/plantuml/plantuml)
+    - [Plantuml-Core](https://github.com/plantuml/plantuml)
 
 # License
     /**
