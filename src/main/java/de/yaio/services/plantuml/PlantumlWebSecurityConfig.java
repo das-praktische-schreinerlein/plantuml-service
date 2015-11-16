@@ -53,13 +53,13 @@ public class PlantumlWebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Configuration
     @Order(9)
     public static class WebshotServiceSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
-        @Value("${plantuml.baseurl}")
+        @Value("${yaio-plantuml-service.baseurl}")
         protected String plantumlBaseUrl;
 
-        @Value("${plantuml.security.apiusers.filelocation}")
+        @Value("${yaio-plantuml-service.security.apiusers.filelocation}")
         protected String usersFile;
 
-        @Value("${plantuml.security.useown}")
+        @Value("${yaio-plantuml-service.security.useown}")
         protected Boolean flgSecureByMyOwn;
 
         private CsrfTokenRepository csrfTokenRepository() {

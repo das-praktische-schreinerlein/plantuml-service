@@ -37,7 +37,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 @Controller
-@RequestMapping("${plantuml.baseurl}")
+@RequestMapping("${yaio-plantuml-service.baseurl}")
 public class PlantumlController {
 
     @Autowired
