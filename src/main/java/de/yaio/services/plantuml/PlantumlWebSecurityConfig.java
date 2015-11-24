@@ -27,11 +27,11 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
-import org.springframework.security.web.util.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.stereotype.Component;
 
 /** 
- * secure the webshot-service
+ * secure the plantuml-service
  *  
  * @FeatureDomain                Config
  * @package                      de.yaio.services.plantuml
@@ -42,16 +42,15 @@ import org.springframework.stereotype.Component;
  */
 @EnableWebSecurity
 @Component
-@Order(40)
 public class PlantumlWebSecurityConfig extends WebSecurityConfigurerAdapter {
     private static final Logger logger = Logger.getLogger(PlantumlWebSecurityConfig.class);
     
     /**
-     * configure API-Configuration for webshot-service
+     * configure API-Configuration for plantuml-service
      */
     @EnableWebSecurity
     @Configuration
-    @Order(9)
+    @Order(1)
     public static class WebshotServiceSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
         @Value("${yaio-plantuml-service.baseurl}")
         protected String plantumlBaseUrl;
