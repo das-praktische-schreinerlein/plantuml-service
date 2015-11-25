@@ -51,7 +51,7 @@ public class PlantumlWebSecurityConfig extends WebSecurityConfigurerAdapter {
     @EnableWebSecurity
     @Configuration
     @Order(1)
-    public static class WebshotServiceSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
+    public static class PlantumlServiceSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
         @Value("${yaio-plantuml-service.baseurl}")
         protected String plantumlBaseUrl;
 
