@@ -42,7 +42,7 @@ public class PlantumlController {
 
     @Autowired
     protected PlantumlUtils converterUtils;
-    
+
     /** 
      * Request to generate plantuml-diagram from src as png
      * @FeatureDomain                Webservice
@@ -55,15 +55,15 @@ public class PlantumlController {
                     value = "/png/{src}",
                     produces = "image/png")
     public @ResponseBody void convertToPng(@PathVariable(value="src") String src,
-                                        HttpServletResponse response) {
+                                           HttpServletResponse response) {
         try {
             // build the UML source from the compressed request parameter
-            
+
             String uml = converterUtils.getUmlSource(src);
             converterUtils.exportAsDiagramm(uml, response, FileFormat.PNG);
         } catch (IIOException iioe) {
-                // Browser has closed the connection, so the HTTP OutputStream is closed
-                // Silently catch the exception to avoid annoying log
+            // Browser has closed the connection, so the HTTP OutputStream is closed
+            // Silently catch the exception to avoid annoying log
         } catch (Exception e) {
             System.err.println("exception start for src:" + src + " ex:" + e);
             e.printStackTrace();
@@ -82,7 +82,7 @@ public class PlantumlController {
                     value = "/img/{src}",
                     produces = "image/png")
     public @ResponseBody void convertToImg(@PathVariable(value="src") String src,
-                                        HttpServletResponse response) {
+                                           HttpServletResponse response) {
         this.convertToPng(src, response);
     }
 
@@ -98,15 +98,15 @@ public class PlantumlController {
                     value = "/svg/{src}",
                     produces = "image/png")
     public @ResponseBody void convertToSvg(@PathVariable(value="src") String src,
-                                        HttpServletResponse response) {
+                                           HttpServletResponse response) {
         try {
             // build the UML source from the compressed request parameter
-            
+
             String uml = converterUtils.getUmlSource(src);
             converterUtils.exportAsDiagramm(uml, response, FileFormat.SVG);
         } catch (IIOException iioe) {
-                // Browser has closed the connection, so the HTTP OutputStream is closed
-                // Silently catch the exception to avoid annoying log
+            // Browser has closed the connection, so the HTTP OutputStream is closed
+            // Silently catch the exception to avoid annoying log
         } catch (Exception e) {
             System.err.println("exception start for src:" + src + " ex:" + e);
             e.printStackTrace();
@@ -114,29 +114,29 @@ public class PlantumlController {
     }
 
     /** 
-    * Request to generate plantuml-diagram from src as ascii
-    * @FeatureDomain                Webservice
-    * @FeatureResult                send diagram-data via HttpServletResponse
-    * @FeatureKeywords              Webservice
-    * @param src                    compressed plantuml-src
-    * @param response               the response-Obj to set contenttype and headers
-    */
-   @RequestMapping(method = RequestMethod.GET, 
-                   value = "/txt/{src}",
-                   produces = "text/plain")
-   public @ResponseBody void convertToAscii(@PathVariable(value="src") String src,
-                                       HttpServletResponse response) {
-       try {
-           // build the UML source from the compressed request parameter
-           
-           String uml = converterUtils.getUmlSource(src);
-           converterUtils.exportAsDiagramm(uml, response, FileFormat.UTXT);
-       } catch (IIOException iioe) {
-               // Browser has closed the connection, so the HTTP OutputStream is closed
-               // Silently catch the exception to avoid annoying log
-       } catch (Exception e) {
-           System.err.println("exception start for src:" + src + " ex:" + e);
-           e.printStackTrace();
-       }
-   }
+     * Request to generate plantuml-diagram from src as ascii
+     * @FeatureDomain                Webservice
+     * @FeatureResult                send diagram-data via HttpServletResponse
+     * @FeatureKeywords              Webservice
+     * @param src                    compressed plantuml-src
+     * @param response               the response-Obj to set contenttype and headers
+     */
+    @RequestMapping(method = RequestMethod.GET, 
+                    value = "/txt/{src}",
+                    produces = "text/plain")
+    public @ResponseBody void convertToAscii(@PathVariable(value="src") String src,
+                                             HttpServletResponse response) {
+        try {
+            // build the UML source from the compressed request parameter
+
+            String uml = converterUtils.getUmlSource(src);
+            converterUtils.exportAsDiagramm(uml, response, FileFormat.UTXT);
+        } catch (IIOException iioe) {
+            // Browser has closed the connection, so the HTTP OutputStream is closed
+            // Silently catch the exception to avoid annoying log
+        } catch (Exception e) {
+            System.err.println("exception start for src:" + src + " ex:" + e);
+            e.printStackTrace();
+        }
+    }
 }

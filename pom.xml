@@ -6,7 +6,7 @@
     <!-- the base -->
     <groupId>de.yaio.services</groupId>
     <artifactId>yaio-plantuml-service</artifactId>
-    <version>0.2.0</version>
+    <version>0.3.0</version>
     <name>Yaio-Plantuml-service</name>
     <description>YourAllInOne Plantuml-Service</description>
     <url>https://github.com/das-praktische-schreinerlein/yaio-plantuml-service</url>
