@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.plantuml.FileFormat;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,8 +41,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("${yaio-plantuml-service.baseurl}")
 public class PlantumlController {
 
+    private static final Logger LOGGER = Logger.getLogger(PlantumlController.class);
+
     @Autowired
-    protected PlantumlUtils converterUtils;
+    protected PlantumProvider converterUtils;
 
     /** 
      * Request to generate plantuml-diagram from src as png
@@ -65,8 +68,7 @@ public class PlantumlController {
             // Browser has closed the connection, so the HTTP OutputStream is closed
             // Silently catch the exception to avoid annoying log
         } catch (Exception e) {
-            System.err.println("exception start for src:" + src + " ex:" + e);
-            e.printStackTrace();
+            LOGGER.warn("exception start for src:" + src, e);
         }
     }
 
@@ -108,8 +110,7 @@ public class PlantumlController {
             // Browser has closed the connection, so the HTTP OutputStream is closed
             // Silently catch the exception to avoid annoying log
         } catch (Exception e) {
-            System.err.println("exception start for src:" + src + " ex:" + e);
-            e.printStackTrace();
+            LOGGER.warn("exception start for src:" + src, e);
         }
     }
 
@@ -135,8 +136,7 @@ public class PlantumlController {
             // Browser has closed the connection, so the HTTP OutputStream is closed
             // Silently catch the exception to avoid annoying log
         } catch (Exception e) {
-            System.err.println("exception start for src:" + src + " ex:" + e);
-            e.printStackTrace();
+            LOGGER.warn("exception start for src:" + src, e);
         }
     }
 }

@@ -42,7 +42,7 @@ import org.springframework.stereotype.Service;
  * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 @Service
-class PlantumlUtils {
+class PlantumProvider {
     private static final Map<FileFormat, String> CONTENT_TYPE;
     static {
         Map<FileFormat, String> map = new HashMap<FileFormat, String>();
@@ -86,7 +86,6 @@ class PlantumlUtils {
     }
 
     protected String getUmlSource(String source) {
-
         // build the UML source from the compressed part of the URL
         String text;
         try {
