@@ -13,6 +13,8 @@
  */
 package de.yaio.services.plantuml.controller;
 
+import java.io.IOException;
+
 import javax.imageio.IIOException;
 import javax.servlet.http.HttpServletResponse;
 
@@ -53,12 +55,13 @@ public class PlantumlController {
      * @FeatureKeywords              Webservice
      * @param src                    compressed plantuml-src
      * @param response               the response-Obj to set contenttype and headers
+     * @throws IOException           possible
      */
     @RequestMapping(method = RequestMethod.GET, 
                     value = "/png/{src}",
                     produces = "image/png")
     public @ResponseBody void convertToPng(@PathVariable(value="src") String src,
-                                           HttpServletResponse response) {
+                                           HttpServletResponse response) throws IOException {
         try {
             // build the UML source from the compressed request parameter
 
@@ -69,6 +72,8 @@ public class PlantumlController {
             // Silently catch the exception to avoid annoying log
         } catch (Exception e) {
             LOGGER.warn("exception start for src:" + src, e);
+            response.setStatus(404);
+            response.getWriter().append("error while reading:" + e.getMessage());
         }
     }
 
@@ -79,12 +84,13 @@ public class PlantumlController {
      * @FeatureKeywords              Webservice
      * @param src                    compressed plantuml-src
      * @param response               the response-Obj to set contenttype and headers
+     * @throws IOException           possible
      */
     @RequestMapping(method = RequestMethod.GET, 
                     value = "/img/{src}",
                     produces = "image/png")
     public @ResponseBody void convertToImg(@PathVariable(value="src") String src,
-                                           HttpServletResponse response) {
+                                           HttpServletResponse response) throws IOException {
         this.convertToPng(src, response);
     }
 
@@ -95,12 +101,13 @@ public class PlantumlController {
      * @FeatureKeywords              Webservice
      * @param src                    compressed plantuml-src
      * @param response               the response-Obj to set contenttype and headers
+     * @throws IOException           possible
      */
     @RequestMapping(method = RequestMethod.GET, 
                     value = "/svg/{src}",
                     produces = "image/png")
     public @ResponseBody void convertToSvg(@PathVariable(value="src") String src,
-                                           HttpServletResponse response) {
+                                           HttpServletResponse response) throws IOException {
         try {
             // build the UML source from the compressed request parameter
 
@@ -111,6 +118,8 @@ public class PlantumlController {
             // Silently catch the exception to avoid annoying log
         } catch (Exception e) {
             LOGGER.warn("exception start for src:" + src, e);
+            response.setStatus(404);
+            response.getWriter().append("error while reading:" + e.getMessage());
         }
     }
 
@@ -121,12 +130,13 @@ public class PlantumlController {
      * @FeatureKeywords              Webservice
      * @param src                    compressed plantuml-src
      * @param response               the response-Obj to set contenttype and headers
+     * @throws IOException           possible
      */
     @RequestMapping(method = RequestMethod.GET, 
                     value = "/txt/{src}",
                     produces = "text/plain")
     public @ResponseBody void convertToAscii(@PathVariable(value="src") String src,
-                                             HttpServletResponse response) {
+                                             HttpServletResponse response) throws IOException {
         try {
             // build the UML source from the compressed request parameter
 
@@ -137,6 +147,8 @@ public class PlantumlController {
             // Silently catch the exception to avoid annoying log
         } catch (Exception e) {
             LOGGER.warn("exception start for src:" + src, e);
+            response.setStatus(404);
+            response.getWriter().append("error while reading:" + e.getMessage());
         }
     }
 }
