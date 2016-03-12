@@ -6,7 +6,7 @@
     <!-- the base -->
     <groupId>de.yaio.services</groupId>
     <artifactId>yaio-plantuml-service</artifactId>
-    <version>0.4.0</version>
+    <version>0.4.1</version>
     <name>Yaio-Plantuml-service</name>
     <description>YourAllInOne Plantuml-Service</description>
     <url>https://github.com/das-praktische-schreinerlein/yaio-plantuml-service</url>
@@ -19,7 +19,7 @@
     <parent>
         <groupId>de.yaio</groupId>
         <artifactId>yaio-pom-webstarter</artifactId>
-        <version>0.1.0</version>
+        <version>[0.1.0,0.2.0)</version>
     </parent>
 
     <properties>
