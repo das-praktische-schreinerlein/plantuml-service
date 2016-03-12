@@ -33,13 +33,6 @@ import org.springframework.stereotype.Service;
 
 /** 
  * services to convert plantuml-src to diagrams
- *  
- * @FeatureDomain                service
- * @package                      de.yaio.services.plantuml.controller
- * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category                     diagram-services
- * @copyright                    Copyright (c) 2014, Michael Schreiner
- * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 @Service
 class PlantumProvider {
@@ -54,9 +47,6 @@ class PlantumProvider {
 
     /**
      * generate and export plantuml-diagram from uml
-     * @FeatureDomain                Webservice
-     * @FeatureResult                send diagram-data via HttpServletResponse
-     * @FeatureKeywords              Webservice
      * @param uml                    the src of the plantuml-diagram
      * @param response               the response to send the diagram
      * @param format                 format of the diagram

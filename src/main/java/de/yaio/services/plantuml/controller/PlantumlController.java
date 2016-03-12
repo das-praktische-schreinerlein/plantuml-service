@@ -31,13 +31,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 /** 
  * controller with Download-Services to convert plantuml-src to diagrams
- *  
- * @FeatureDomain                Webservice
- * @package                      de.yaio.services.plantuml.controller
- * @author                       Michael Schreiner <michael.schreiner@your-it-fellow.de>
- * @category                     diagram-services
- * @copyright                    Copyright (c) 2014, Michael Schreiner
- * @license                      http://mozilla.org/MPL/2.0/ Mozilla Public License 2.0
  */
 @Controller
 @RequestMapping("${yaio-plantuml-service.baseurl}")
@@ -50,9 +43,6 @@ public class PlantumlController {
 
     /** 
      * Request to generate plantuml-diagram from src as png
-     * @FeatureDomain                Webservice
-     * @FeatureResult                send diagram-data via HttpServletResponse
-     * @FeatureKeywords              Webservice
      * @param src                    compressed plantuml-src
      * @param response               the response-Obj to set contenttype and headers
      * @throws IOException           possible
@@ -79,9 +69,6 @@ public class PlantumlController {
 
     /** 
      * Request to generate plantuml-diagram from src as png
-     * @FeatureDomain                Webservice
-     * @FeatureResult                send diagram-data via HttpServletResponse
-     * @FeatureKeywords              Webservice
      * @param src                    compressed plantuml-src
      * @param response               the response-Obj to set contenttype and headers
      * @throws IOException           possible
@@ -96,9 +83,6 @@ public class PlantumlController {
 
     /** 
      * Request to generate plantuml-diagram from src as svg
-     * @FeatureDomain                Webservice
-     * @FeatureResult                send diagram-data via HttpServletResponse
-     * @FeatureKeywords              Webservice
      * @param src                    compressed plantuml-src
      * @param response               the response-Obj to set contenttype and headers
      * @throws IOException           possible
@@ -125,9 +109,6 @@ public class PlantumlController {
 
     /** 
      * Request to generate plantuml-diagram from src as ascii
-     * @FeatureDomain                Webservice
-     * @FeatureResult                send diagram-data via HttpServletResponse
-     * @FeatureKeywords              Webservice
      * @param src                    compressed plantuml-src
      * @param response               the response-Obj to set contenttype and headers
      * @throws IOException           possible
