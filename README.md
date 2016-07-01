@@ -10,20 +10,8 @@ Inspired by [Plantuml-Server](https://github.com/plantuml/plantuml-server) but s
 - test it
 
         mvn install
-        mvn spring-boot:run
+        java -Xmx768m -Xms128m -Dspring.config.location=file:config/plantuml-application.properties -Dlog4j.configuration=file:config/log4j.properties -cp "dist/yaio-plantuml-service-full.jar" de.yaio.services.plantuml.server.PlantumlApplication --config config/plantuml-application.properties
         curl --user plantuml:secret -X GET http://localhost:8082/services/plantuml/img/SyfFKj2rKt3CoKnELR1Io4ZDoSa70000 > /cygdrive/d/tmp/plantumltest.png
-
-- to build it as standalone-jar with all dependencies take a look at pom.xml
-
-        <!-- packaging - change it with "mvn package -Dpackaging.type=jar" -->
-        <packaging.type>jar</packaging.type>
-        <!-- assembly a jar with all dependencies - activate it with "mvn package -Dpackaging.assembly-phase=package" -->
-        <packaging.assembly-phase>none</packaging.assembly-phase>
-        <!-- shade to an ueber-jar - activate it with "mvn package -Dpackaging.shade-phase=package" -->
-        <packaging.shade-phase>none</packaging.shade-phase>
-        <!-- prepare for springboot - activate it with "mvn package -Dpackaging.springboot-phase=package" -->
-        <packaging.springboot-phase>none</packaging.springboot-phase>
-
 
 # Thanks to
 - **Build-Tools**
