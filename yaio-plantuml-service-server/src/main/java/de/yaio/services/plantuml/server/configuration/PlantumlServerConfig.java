@@ -11,7 +11,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package de.yaio.services.plantuml;
+package de.yaio.services.plantuml.server.configuration;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -24,13 +24,13 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @EnableAutoConfiguration
 @ComponentScan("de.yaio.services.plantuml")
-public class PlantumlApplication {
+public class PlantumlServerConfig {
 
     /** 
      * Main-method to start the application
      * @param args                   the command line arguments
      */
     public static void main(String[] args) {
-        SpringApplication.run(PlantumlApplication.class, args);
+        SpringApplication.run(PlantumlServerConfig.class, args);
     }
 }
