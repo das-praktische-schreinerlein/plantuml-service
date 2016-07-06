@@ -14,8 +14,12 @@
 package de.yaio.services.plantuml.server.controller;
 
 import java.io.IOException;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.imageio.IIOException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.plantuml.FileFormat;
@@ -23,10 +27,10 @@ import net.sourceforge.plantuml.FileFormat;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
+import static org.apache.http.HttpStatus.SC_BAD_REQUEST;
+import static org.apache.http.HttpStatus.SC_INTERNAL_SERVER_ERROR;
 
 
 /** 
@@ -52,19 +56,9 @@ public class PlantumlController {
                     produces = "image/png")
     public @ResponseBody void convertToPng(@PathVariable(value="src") String src,
                                            HttpServletResponse response) throws IOException {
-        try {
-            // build the UML source from the compressed request parameter
-
-            String uml = converterUtils.getUmlSource(src);
-            converterUtils.exportAsDiagramm(uml, response, FileFormat.PNG);
-        } catch (IIOException iioe) {
-            // Browser has closed the connection, so the HTTP OutputStream is closed
-            // Silently catch the exception to avoid annoying log
-        } catch (Exception e) {
-            LOGGER.warn("exception start for src:" + src, e);
-            response.setStatus(404);
-            response.getWriter().append("error while reading:" + e.getMessage());
-        }
+        // build the UML source from the compressed request parameter
+        String uml = converterUtils.getUmlSource(src);
+        converterUtils.exportAsDiagramm(uml, response, FileFormat.PNG);
     }
 
     /** 
@@ -89,22 +83,12 @@ public class PlantumlController {
      */
     @RequestMapping(method = RequestMethod.GET, 
                     value = "/svg/{src}",
-                    produces = "image/png")
+                    produces = "image/svg")
     public @ResponseBody void convertToSvg(@PathVariable(value="src") String src,
                                            HttpServletResponse response) throws IOException {
-        try {
-            // build the UML source from the compressed request parameter
-
-            String uml = converterUtils.getUmlSource(src);
-            converterUtils.exportAsDiagramm(uml, response, FileFormat.SVG);
-        } catch (IIOException iioe) {
-            // Browser has closed the connection, so the HTTP OutputStream is closed
-            // Silently catch the exception to avoid annoying log
-        } catch (Exception e) {
-            LOGGER.warn("exception start for src:" + src, e);
-            response.setStatus(404);
-            response.getWriter().append("error while reading:" + e.getMessage());
-        }
+        // build the UML source from the compressed request parameter
+        String uml = converterUtils.getUmlSource(src);
+        converterUtils.exportAsDiagramm(uml, response, FileFormat.SVG);
     }
 
     /** 
@@ -118,18 +102,65 @@ public class PlantumlController {
                     produces = "text/plain")
     public @ResponseBody void convertToAscii(@PathVariable(value="src") String src,
                                              HttpServletResponse response) throws IOException {
-        try {
-            // build the UML source from the compressed request parameter
+        // build the UML source from the compressed request parameter
+        String uml = converterUtils.getUmlSource(src);
+        converterUtils.exportAsDiagramm(uml, response, FileFormat.UTXT);
+    }
 
-            String uml = converterUtils.getUmlSource(src);
-            converterUtils.exportAsDiagramm(uml, response, FileFormat.UTXT);
-        } catch (IIOException iioe) {
-            // Browser has closed the connection, so the HTTP OutputStream is closed
-            // Silently catch the exception to avoid annoying log
-        } catch (Exception e) {
-            LOGGER.warn("exception start for src:" + src, e);
-            response.setStatus(404);
-            response.getWriter().append("error while reading:" + e.getMessage());
+    @ExceptionHandler(value = {IIOException.class})
+    public void handleCustomException(final HttpServletRequest request, final IIOException e,
+                                      final HttpServletResponse response) {
+        // Browser has closed the connection, so the HTTP OutputStream is closed
+        // Silently catch the exception to avoid annoying log
+        LOGGER.info("IIOException (Browser has closed the connection, so the HTTP OutputStream is closed) " +
+                "while running request:" + createRequestLogMessage(request), e);
+    }
+
+    @ExceptionHandler(value = {IOException.class})
+    public void handleCustomException(final HttpServletRequest request, final Exception e,
+                                   final HttpServletResponse response) {
+        LOGGER.info("IOException while running request:" + createRequestLogMessage(request), e);
+        response.setStatus(SC_BAD_REQUEST);
+        try {
+            response.getWriter().append("exception while converting plantuml");
+        } catch (IOException ex) {
+            LOGGER.warn("exception while exceptionhandling", ex);
         }
+    }
+
+    @ExceptionHandler(value = {Exception.class, RuntimeException.class})
+    public void handleAllException(final HttpServletRequest request, final Exception e,
+                                   final HttpServletResponse response) {
+        LOGGER.info("Exception while running request:" + createRequestLogMessage(request), e);
+        response.setStatus(SC_INTERNAL_SERVER_ERROR);
+        try {
+            response.getWriter().append("exception while converting plantuml");
+        } catch (IOException ex) {
+            LOGGER.warn("exception while exceptionhandling", ex);
+        }
+    }
+
+    protected String createRequestLogMessage(HttpServletRequest request) {
+        return new StringBuilder("REST Request - ")
+                .append("[HTTP METHOD:")
+                .append(request.getMethod())
+                .append("] [URL:")
+                .append(request.getRequestURL())
+                .append("] [REQUEST PARAMETERS:")
+                .append(getRequestMap(request))
+                .append("] [REMOTE ADDRESS:")
+                .append(request.getRemoteAddr())
+                .append("]").toString();
+    }
+
+    private Map<String, String> getRequestMap(HttpServletRequest request) {
+        Map<String, String> typesafeRequestMap = new HashMap<>();
+        Enumeration<?> requestParamNames = request.getParameterNames();
+        while (requestParamNames.hasMoreElements()) {
+            String requestParamName = (String)requestParamNames.nextElement();
+            String requestParamValue = request.getParameter(requestParamName);
+            typesafeRequestMap.put(requestParamName, requestParamValue);
+        }
+        return typesafeRequestMap;
     }
 }

@@ -25,6 +25,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>de.yaio</groupId>
+            <artifactId>yaio-commons</artifactId>
+            <version>${yaio-commons.version}</version>
+        </dependency>
+        <dependency>
             <groupId>net.sourceforge.plantuml</groupId>
             <artifactId>plantuml</artifactId>
             <version>RELEASE</version>
